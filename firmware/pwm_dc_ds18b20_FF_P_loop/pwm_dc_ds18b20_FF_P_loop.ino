@@ -12,8 +12,7 @@
 // Define initial Peltier PWM value and desired setpoint in oC:
 int PWMValue = 255;
 const float setpointC = 17;
-const float gainP = 2;
-
+const float gainP = 50;
 
 // Set up a oneWire instance to communicate with any OneWire devices
 // and not just Maxim / Dallas temperature ICs:
@@ -65,12 +64,19 @@ void loop() {
   Serial.print(sensors.getTempCByIndex(0));
 
   // Compute ff with P control:
-  float ff = feedforward(setpointC);
-  float error = setpointC - sensors.getTempCByIndex(0);
-  float PWMValue = ff - gainP * error;
+  if (PWMValue <= 255 && PWMValue >=0){
+    float ff = feedforward(setpointC);
+    float error = setpointC - sensors.getTempCByIndex(0);
+    
+    float PWMValue = ff - gainP * error;
+    // Set PWM pin to our new PWM value:
+    analogWrite(PWMoutput, PWMValue);
+  }
 
-  // Set PWM pin to our new PWM value:
-  analogWrite(PWMoutput, PWMValue);
+  else if (PWMValue > 255)
+    analogWrite(PWMoutput, 255);
+  else if (PWMValue < 0)
+    analogWrite(PWMoutput, 0);  
   
   // Delete if not debugging:
   delay(1000);
