@@ -27,10 +27,11 @@ for df, csv in zip(dfs, csvs):
     
     # Plot:
     plt.figure(num=None, figsize=(12, 4), dpi=100, facecolor='w', edgecolor='k')
-    plt.plot(df["time"], df["temperature (C)"], color=palette[1])
+    plt.plot(df["time"], df["temperature (C)"], color=palette[1], linewidth=3)
     plt.xlabel("time")
     plt.ylabel("temperature (C)")
     _, title = split(csv)
     plt.title(f"{title}".replace("_", " ").replace(".csv", "").upper())
     plt.grid(True)
     plt.show()
+    plt.savefig()
