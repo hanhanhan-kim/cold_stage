@@ -6,7 +6,7 @@ for each Peltier PWM duty cycle.
 """
 
 import glob 
-import datetime
+from os.path import split
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -26,5 +26,7 @@ for df, csv in zip(dfs, csvs):
     plt.plot(df["time"], df["temperature (C)"])
     plt.xlabel("time")
     plt.ylabel("temperature (C)")
+    _, title = split(csv)
+    plt.title(f"{title}".replace("_", " ").replace(".csv", ""))
     plt.grid(True)
     plt.show()
