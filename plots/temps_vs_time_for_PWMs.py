@@ -26,7 +26,7 @@ def main():
         df["time"] =  pd.to_datetime(df["time"])
         
         # Plot:
-        plt.figure(num=None, figsize=(10, 5))
+        plt.figure(num=None, figsize=(10, 5), dpi=500)
         plt.plot(df["time"], 
                 df["temperature (C)"], 
                 color=colour, 
