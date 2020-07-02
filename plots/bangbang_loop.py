@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 """
+Compare measured temperatures vs setpoint of bang-bang control loop.
 """
 
 import matplotlib.pyplot as plt
