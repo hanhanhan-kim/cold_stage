@@ -9,6 +9,7 @@ import bokeh.palettes
 from scipy import stats
 import pandas as pd
 
+
 plt.style.use("ggplot")
 palette = bokeh.palettes.Paired[6]
 
@@ -27,7 +28,7 @@ plt.plot(x, y,
          color=palette[4], 
          markersize=14, 
          alpha=0.8, 
-         label='original data')
+         label='measured temperatures')
 plt.plot(x, intercept + slope*x, "--",
          color=palette[5], 
          alpha=0.9,
