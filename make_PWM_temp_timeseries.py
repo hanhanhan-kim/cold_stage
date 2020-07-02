@@ -1,3 +1,10 @@
+#!/usr/bin/env python3
+
+"""
+Generate timeseries plots of temperature readings from DS18B20 sensor, 
+for each Peltier PWM duty cycle.
+"""
+
 import glob 
 import datetime
 
