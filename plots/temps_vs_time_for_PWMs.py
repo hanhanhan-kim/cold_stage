@@ -14,10 +14,11 @@ import pandas as pd
 from pandas.plotting import register_matplotlib_converters
 register_matplotlib_converters()
 
+
 plt.style.use("ggplot")
 colours = bokeh.palettes.Blues256[150::-15]
 
-csvs = sorted(glob.glob("../data/feedforward_calibration/*.csv"))
+csvs = sorted(glob.glob("../data/steadystate_temps/*.csv"))
 dfs = [pd.read_csv(csv, names=["time", "temperature (C)"]) for csv in csvs]
 
 for df, csv, colour in zip(dfs, csvs, colours):
@@ -34,4 +35,4 @@ for df, csv, colour in zip(dfs, csvs, colours):
     title = title.replace("_", " ").replace(".csv", "").upper()
     plt.title(f"{title}")
     fname = title.replace(" ", "_")
-    plt.savefig(f"temps_vs_time_for_{fname}.png")
+    plt.savefig(f"temps_vs_time_for_PWM/temps_vs_time_for_{fname}.png")
