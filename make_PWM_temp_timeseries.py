@@ -6,10 +6,10 @@ import pandas as pd
 from pandas.plotting import register_matplotlib_converters
 register_matplotlib_converters()
 
-csvs = sorted(glob.glob("*.csv"))
+csvs = sorted(glob.glob("data/feedforward_calibration/*.csv"))
 dfs = [pd.read_csv(csv, names=["time", "temperature (C)"]) for csv in csvs]
 
-for df, csv in zip(dfs,csvs):
+for df, csv in zip(dfs, csvs):
     
     # Convert time string to datetime object:
     df["time"] =  pd.to_datetime(df["time"])
