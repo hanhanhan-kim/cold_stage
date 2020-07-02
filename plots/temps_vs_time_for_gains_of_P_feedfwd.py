@@ -34,5 +34,5 @@ for df, csv in zip(dfs, csvs):
     title = title.replace("_", " ").replace(".csv", "")
     plt.title(f"{title} in P with feedforward control")
     fname = title.replace(" ", "_")
-    plt.show()
-    # plt.savefig(f"temps_vs_time_for_gains_of_P_feedfwd/temps_vs_time_for_{fname}.png")
+    # plt.show()
+    plt.savefig(f"temps_vs_time_for_gains_of_P_feedfwd/temps_vs_time_for_{fname}.png")
