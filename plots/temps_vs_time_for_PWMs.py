@@ -15,23 +15,23 @@ from pandas.plotting import register_matplotlib_converters
 register_matplotlib_converters()
 
 plt.style.use("ggplot")
-palette = bokeh.palettes.Paired[6]
+colours = bokeh.palettes.Blues256[150::-15]
 
-csvs = sorted(glob.glob("data/feedforward_calibration/*.csv"))
+csvs = sorted(glob.glob("../data/feedforward_calibration/*.csv"))
 dfs = [pd.read_csv(csv, names=["time", "temperature (C)"]) for csv in csvs]
 
-for df, csv in zip(dfs, csvs):
-    
+for df, csv, colour in zip(dfs, csvs, colours):
+
     # Convert time string to datetime object:
     df["time"] =  pd.to_datetime(df["time"])
     
     # Plot:
-    plt.figure(num=None, figsize=(12, 4), dpi=100, facecolor='w', edgecolor='k')
-    plt.plot(df["time"], df["temperature (C)"], color=palette[1], linewidth=3)
+    plt.figure(num=None, figsize=(10, 5))
+    plt.plot(df["time"], df["temperature (C)"], color=colour, linewidth=3)
     plt.xlabel("time")
     plt.ylabel("temperature (C)")
     _, title = split(csv)
-    plt.title(f"{title}".replace("_", " ").replace(".csv", "").upper())
-    plt.grid(True)
-    plt.show()
-    plt.savefig()
+    title = title.replace("_", " ").replace(".csv", "").upper()
+    plt.title(f"{title}")
+    fname = title.replace(" ", "_")
+    plt.savefig(f"temps_vs_time_for_{fname}.png")
