@@ -24,7 +24,7 @@ def main():
     slope, intercept, r_value, p_value, std_err = stats.linregress(x, y)
 
     # Plot:
-    plt.figure(num=None, figsize=(10, 7), dpi=100)
+    plt.figure(num=None, figsize=(10, 7), dpi=500)
     plt.plot(x, y, 
             'o', 
             color=palette[4], 
