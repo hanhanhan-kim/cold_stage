@@ -13,24 +13,32 @@ import bokeh.palettes
 import pandas as pd
 
 
-plt.style.use("ggplot")
-colours = bokeh.palettes.Blues256[150::-15]
+def main():
+    plt.style.use("ggplot")
+    colours = bokeh.palettes.Blues256[150::-15]
 
-csvs = sorted(glob.glob("../data/steadystate_temps/*.csv"))
-dfs = [pd.read_csv(csv, names=["time", "temperature (C)"]) for csv in csvs]
+    csvs = sorted(glob.glob("../data/steadystate_temps/*.csv"))
+    dfs = [pd.read_csv(csv, names=["time", "temperature (C)"]) for csv in csvs]
 
-for df, csv, colour in zip(dfs, csvs, colours):
+    for df, csv, colour in zip(dfs, csvs, colours):
 
-    # Convert time string to datetime object:
-    df["time"] =  pd.to_datetime(df["time"])
-    
-    # Plot:
-    plt.figure(num=None, figsize=(10, 5))
-    plt.plot(df["time"], df["temperature (C)"], color=colour, linewidth=3)
-    plt.xlabel("time")
-    plt.ylabel("temperature (C)")
-    _, title = split(csv)
-    title = title.replace("_", " ").replace(".csv", "").upper()
-    plt.title(f"{title}")
-    fname = title.replace(" ", "_")
-    plt.savefig(f"temps_vs_time_for_PWM/temps_vs_time_for_{fname}.png")
+        # Convert time string to datetime object:
+        df["time"] =  pd.to_datetime(df["time"])
+        
+        # Plot:
+        plt.figure(num=None, figsize=(10, 5))
+        plt.plot(df["time"], 
+                df["temperature (C)"], 
+                color=colour, 
+                linewidth=3)
+        plt.xlabel("time")
+        plt.ylabel("temperature (C)")
+        _, title = split(csv)
+        title = title.replace("_", " ").replace(".csv", "").upper()
+        plt.title(f"{title}")
+        fname = title.replace(" ", "_")
+        plt.savefig(f"temps_vs_time_for_PWM/temps_vs_time_for_{fname}.png")
+
+
+if __name__ == "__main__":
+    main()
