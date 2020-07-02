@@ -11,7 +11,7 @@
 
 // Define initial Peltier PWM value and desired setpoint in oC:
 int PWMValue = 255;
-float setpointC = 17;
+const float setpointC = 17;
 
 // Set up a oneWire instance to communicate with any OneWire devices
 // and not just Maxim / Dallas temperature ICs:
