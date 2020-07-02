@@ -12,7 +12,7 @@
 // Define initial Peltier PWM value and desired setpoint in oC:
 int PWMValue = 255;
 const float setpointC = 17;
-const float gainP = -2;
+const float gainP = 2;
 
 
 // Set up a oneWire instance to communicate with any OneWire devices
@@ -65,9 +65,9 @@ void loop() {
   Serial.print(sensors.getTempCByIndex(0));
 
   // Compute ff with P control:
-  float ff = feedforward(sensors.getTempCByIndex(0));
+  float ff = feedforward(setpointC);
   float error = setpointC - sensors.getTempCByIndex(0);
-  float PWMValue = ff + gainP * error;
+  float PWMValue = ff - gainP * error;
 
   // Set PWM pin to our new PWM value:
   analogWrite(PWMoutput, PWMValue);
@@ -78,8 +78,8 @@ void loop() {
 }
 
 // My feedforward function for initializing the PWM value:
-float feedforward(float tempMeasured){
+float feedforward(float setpointC){
   float pwmValue;
-  pwmValue = -10.44 * tempMeasured + 243.16;
+  pwmValue = -10.44 * setpointC + 243.16;
   return pwmValue;
 }
