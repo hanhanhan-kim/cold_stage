@@ -19,7 +19,7 @@ slope, intercept, r_value, p_value, std_err = stats.linregress(x, y)
 # Plot:
 plt.plot(x, y, 'o', label='original data')
 plt.plot(x, intercept + slope*x, 'r', label='fitted line')
-plt.xlabel("temperature (C)")
+plt.xlabel("steady state temperature (C)")
 plt.ylabel("PWM value (from 8-bit res)")
 plt.legend()
 plt.text(2, 0, f"PWM value = {slope:.2f}*temperature + {intercept:.2f}")
