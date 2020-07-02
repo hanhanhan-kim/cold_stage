@@ -11,8 +11,6 @@ from os.path import split
 import matplotlib.pyplot as plt
 import bokeh.palettes
 import pandas as pd
-from pandas.plotting import register_matplotlib_converters
-register_matplotlib_converters()
 
 
 plt.style.use("ggplot")
