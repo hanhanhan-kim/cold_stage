@@ -16,15 +16,11 @@ In addition to the usual hobby electronics tools and consumables—jumper wires,
 - [Air-cooled Peltier module](https://www.adafruit.com/product/1335) [(recommended in Peter's blog)](https://ptweir.github.io/flyBridge/)
 - [12 V power supply rated for at least 6 A](https://www.amazon.com/gp/product/B07M981HSV/ref=ppx_yo_dt_b_asin_title_o01_s00?ie=UTF8&psc=1)
 
-
-
-##Circuit
+## Circuit
 
 Connect the DC motor driver to the Teensy as specified in the below schematic from Pololu:
 
-```
 ![VNH5019 hookup example from Pololu](docs/VNH5019_hookup.jpg)
-```
 
 One of the many reasons the Teensy is great is because it has tons of digital and PWM pins—way more than the Arduino Nano, which despite having a similar form factor, is limited in its pin selections. 
 
