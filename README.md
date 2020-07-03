@@ -63,8 +63,6 @@ The [PID control system](https://en.wikipedia.org/wiki/PID_controller) is one of
 <p align="center">
   <img width="250" src="docs/P_FF_control_eqn.jpg">
 </p>
-<!-- <img src="docs/P_FF_control_eqn.jpg" width=300 align=center> -->
-
 
 To implement the above control scheme, we first need to approximate the FF function. To do so, we try and build a relationship between PWM values and their resulting steady-state Peltier temperatures. We do so by uploading an open loop scheme to our microprocessor. The one I wrote and used is [here](https://github.com/hanhanhan-kim/cold_stage/tree/master/firmware/pwm_dc_ds18b20_open_loop). I collect with it the following timeseries data (while I don't show it below, because they depict just room temperature, I also collected temperature data for PWM 0 and PWM 1; they can be found [here](https://github.com/hanhanhan-kim/cold_stage/tree/master/plots/temps_vs_time_for_PWM):
 
@@ -111,13 +109,13 @@ Before we can call it a day, we need to tune the magnitude of our gain term. P c
 
 The above data suggests that a gain magnitude of 50 is close to appropriate! The steady state temperature is only half a degree or so off from the setpoint. 
 
-TODO: Add button (support only a single setpoint, probs 4C) or pot (support many setpoints)
-TODO: Add 7-segment display
-TODO: Try liquid-cooled Peltier
-TODO: If using liquid-cooled Peltier, think of a cheap way to flow the liquid. Probably pond or aquarium pump. 
-TODO: Design and mill aluminum plate that has a socket for securing the temperature sensor; screw onto Peltier and use CPU cooling paste
-TODO: Design casing
-TODO: Design PCB?
+TODO: Add button (support only a single setpoint, probs 4C) or pot (support many setpoints)\
+TODO: Add 7-segment display\
+TODO: Try liquid-cooled Peltier\
+TODO: If using liquid-cooled Peltier, think of a cheap way to flow the liquid. Probably pond or aquarium pump.\
+TODO: Design and mill aluminum plate that has a socket for securing the temperature sensor; screw onto Peltier and use CPU cooling paste\
+TODO: Design casing\
+TODO: Design PCB?\
 
 
 <!-- One of the many reasons the Teensy is great is because it has tons of digital and PWM pins—way more than the Arduino Nano, which despite having a similar form factor, provides less generous pin options.  -->
