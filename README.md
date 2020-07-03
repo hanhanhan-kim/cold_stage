@@ -20,10 +20,7 @@ In addition to the usual hobby electronics tools and consumables—jumper wires,
 
 Connect the DC motor driver to the Teensy as specified in the below schematic from Pololu:
 
-```
-![VNH5019 wiring schematic from Pololu](./docs/VNH5019_hookup.jpg)
-Format: ![Alt Text](url)
-```
+![VNH5019_hookup](/Users/hankbook/Dropbox/git/cold_stage/docs/VNH5019_hookup.jpg)
 
 One of the many reasons the Teensy is great is because it has tons of digital and PWM pins—way more than the Arduino Nano, which despite having a similar form factor, is limited in its pin selections. 
 
