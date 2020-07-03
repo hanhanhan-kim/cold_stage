@@ -74,7 +74,7 @@ To implement the above control scheme, we first need to approximate the FF funct
 ![pwm127](plots/temps_vs_time_for_PWM/temps_vs_time_for_PWM_127.png)
 ![pwm255](plots/temps_vs_time_for_PWM/temps_vs_time_for_PWM_255.png)
 
-The FF function does not need to very good, because the P term of our control scheme will correct for deviations from the setpoint. For this reason, we can just eyeball the measured steady-state temperature for each PWM setting, and plot those temperatures against their PWM values. We then perform a quick and dirty linear regression to derive the approximate FF function:
+The FF function does not need to be very good, because the P term of our control scheme will correct for deviations from the setpoint. For this reason, we can just eyeball the measured steady-state temperature for each PWM setting, and plot those temperatures against their PWM values. We then perform a quick and dirty linear regression to derive the approximate FF function:
 
 ![lookup table of PWMS vs temps](plots/PWMs_vs_temps.png)
 
