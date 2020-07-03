@@ -64,7 +64,7 @@ The [PID control system](https://en.wikipedia.org/wiki/PID_controller) is one of
   <img width="250" src="docs/P_FF_control_eqn.jpg">
 </p>
 
-To implement the above control scheme, we first need to approximate the FF function. To do so, we try and build a relationship between PWM values and their resulting steady-state Peltier temperatures. We do so by uploading an open loop scheme to our microprocessor. The one I wrote and used is [here](https://github.com/hanhanhan-kim/cold_stage/tree/master/firmware/pwm_dc_ds18b20_open_loop). I collect with it the following timeseries data (while I don't show it below, because they depict just room temperature, I also collected temperature data for PWM 0 and PWM 1; they can be found [here](https://github.com/hanhanhan-kim/cold_stage/tree/master/plots/temps_vs_time_for_PWM):
+To implement the above control scheme, we first need to approximate the FF function. To do so, we try and build a relationship between PWM values and their resulting steady-state Peltier temperatures. We do so by uploading an open loop scheme to our microprocessor. The one I wrote and used is [here](https://github.com/hanhanhan-kim/cold_stage/tree/master/firmware/pwm_dc_ds18b20_open_loop). I collect with it the following timeseries data (while I don't show them below, because they depict just room temperature, I also collected temperature data for PWM 0 and PWM 1; they can be found [here](https://github.com/hanhanhan-kim/cold_stage/tree/master/plots/temps_vs_time_for_PWM)):
 
 ![pwm3](plots/temps_vs_time_for_PWM/temps_vs_time_for_PWM_003.png)
 ![pwm7](plots/temps_vs_time_for_PWM/temps_vs_time_for_PWM_007.png)
