@@ -6,6 +6,14 @@ I outline the steps for making a DIY insect cooling stage. Cold temperatures imm
 
 Peter Weir's [excellent blog post](https://ptweir.github.io/flyBridge/) inspired this project, but I decided I didn't want to spend money on a fancy temperature controller like [TE Tech's TC-48-20](https://tetech.com/product/tc-48-20/). Below, I detail my amateur efforts on making a closed-loop temperature controller for an insect cooling stage. I thank [Will Dickson](https://github.com/willdickson) for hardware recommendations and for general troubleshooting and control systems advice—in particular for suggesting a proportional control scheme with a feedforward term. 
 
+## General mechanism
+
+The basic mechanism behind this cooling stage is straightforward. Similar to a DC motor, whose speed is a direct function of the DC voltage going across it, a [Peltier device](https://en.wikipedia.org/wiki/Thermoelectric_cooling)'s output temperature is a function of the DC voltage across its leads. By extension, we can flip the voltage polarity across the leads of the Peltier device to reverse its hot and cold sides, just like how we can flip the polarity across a DC motor, so it spins in reverse. In other words, if we can control the DC voltage going across the Peltier, we can control how cold our cooling stage will be. 
+
+To tune the voltage across the Peltier, we are going to use a microcontroller to apply a [pulse-width modulation (PWM)](https://en.wikipedia.org/wiki/Pulse-width_modulation) train across the Peltier's leads. In short, a PWM pulse train is akin to power cycling a load at an extremely high frequency. In doing so, we can reach voltage levels that are between full blast (12 V, in this case) and zero. The Peltier device does not 'perceive' the rapid on and off switching, and instead sees the average voltage. More specifically, we adjust the pulse width of the PWM train—from rising to rising, usually—to achieve different average voltage levels. We refer to the pulse width adjustment as the PWM's "duty cycle". So if a 100% duty cycle outputs 12 V, then a 50% duty cycle outputs an average of 6 V. Importantly, the frequency of the PWM remains constant, when we adjust the duty cycle. The minimum PWM frequency to achieve a perceptibly stable average voltage depends on the intricacies of the load we are trying to control. Peltier devices demand a rather high minimum PWM frequency. The internet recommends at least [500 Hz](https://forum.pololu.com/t/vnh2sp30-peltier-nonlinear-current-at-high-pwm-frequency/1646/6) for some Peltiers, and [at least 2000 Hz](https://www.physics.utoronto.ca/~phy326/xrf/APPENDIX%20E.pdf) for other models.
+
+My cooling stage also uses a temperature sensor to determine whether the desired temperature has been reached. I detail later on in the text, the particular control scheme I use to achieve feedback, but in short, I try both a bang-bang control scheme and a proportional (P) control scheme with a feedforward term. I opt for the latter, because switching between 0% and 100% duty cycles (actual power-cycling) [wreaks havoc](https://www.reddit.com/r/AskEngineers/comments/8dwfn9/controlling_tecpeltier_plate_modules/) on the lifespans of Peltiers. 
+
 ## Materials
 
 In addition to the usual hobby electronics tools and consumables—jumper wires, breadboard, multimeter, etc.—I use the following parts:
@@ -18,7 +26,7 @@ In addition to the usual hobby electronics tools and consumables—jumper wires,
 
 ## Circuit
 
-Connect the DC motor driver to the Teensy as specified in the below schematic from Pololu. Note that the GNDs for the motor and logic powers are common:
+Connect the DC motor driver to the Teensy as specified in the below schematic [from Pololu](https://www.pololu.com/product/1451). Note that the GNDs for the motor and logic powers are common:
 
 ![VNH5019 hookup example from Pololu](docs/VNH5019_hookup.jpg)
 
@@ -32,7 +40,22 @@ Don't fret if your wiring doesn't look exactly like the photo above. So long as 
 
 ## Firmware
 
-If you want to get your cooling stage going right away, simply upload this sketch to your Teensy and call it a day! Simply edit the line specifying the setpoint temperature (C), `const float setpointC = 17;`, to whatever you fancy—probably something like `4`. If you're interested in a little bit of the troubleshooting and validation I went through to arrive at the recommended firmware, continuing reading this section. 
+If you want to get your cooling stage going right away, upload [this sketch](https://github.com/hanhanhan-kim/cold_stage/tree/master/firmware/pwm_dc_ds18b20_FF_P_loop) to your Teensy and call it a day! Just edit the line specifying the setpoint temperature (C), `const float setpointC = 17;`, to whatever you fancy—probably something like `4` C. If you're interested in a little bit of the troubleshooting and validation process I went through to arrive at the recommended firmware, continue to the below section. Otherwise, enjoy your icy immobile insects!
+
+![A frosty Peltier](docs/frosty_peltier.jpg)
+
+## Troubleshooting and validation
+
+I originally started off with one of the new Arduino Nanos, the [Arduino Nano Every](https://store.arduino.cc/usa/nano-every), as my microcontroller. I ran into some trouble, however, because pushing its PWM frequency past its ~500 Hz defaults is [currently a real headache](https://forum.arduino.cc/index.php?topic=626736.0). 
+
+
+TODO: Add button (support only a single setpoint, probs 4C) or pot (support many setpoints)
+TODO: Add 7-segment display
+TODO: Try liquid-cooled Peltier
+TODO: If using liquid-cooled Peltier, think of a cheap way to flow the liquid. Probably pond or aquarium pump. 
+TODO: Design casing
+TODO: Design PCB?
+
 
 <!-- One of the many reasons the Teensy is great is because it has tons of digital and PWM pins—way more than the Arduino Nano, which despite having a similar form factor, provides less generous pin options.  -->
 
