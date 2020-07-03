@@ -50,7 +50,7 @@ I originally started off with one of the new Arduino Nanos, the [Arduino Nano Ev
 
 ### Bang-bang control
 
-My firmware originally implemented a [bang-bang control](https://en.wikipedia.org/wiki/Bang%E2%80%93bang_control) scheme. In this system, the Peltier is in one of two discrete states: full blast (100% duty cycle) or nothing at all (0% duty cycle). When under bang-bang control, the Peltier starts off in full blast mode so that it can reach its setpoint, the desired temperature, as fast as it can. Upon reaching the setpoint, the Peltier fails to cease cooling in time, and so the Peltier undershoots the desired temperature. This undershooting triggers the Peltier to enter its total off state, so that the temperature can rise back up towards the setpoint, as quickly (and as passively) as possible. Under this regime, the Peltier overshoots its setpoint, which causes the device to enter its 100% duty cycle state again. This infinite oscillation between the two discrete 100% and 0% duty cycle states actually hovers around the setpoint, reasonably tightly, and with acceptable latency. See this figure I generated from a single trial of temperature measurements while my Peltier was under bang-bang control:
+My firmware originally implemented a [bang-bang control](https://en.wikipedia.org/wiki/Bang%E2%80%93bang_control) scheme. The bang-bang control firmware I wrote can be found [here](https://github.com/hanhanhan-kim/cold_stage/blob/master/firmware/pwm_dc_ds18b20_bangbang_loop/pwm_dc_ds18b20_bangbang_loop.ino). In this system, the Peltier is in one of two discrete states: full blast (100% duty cycle) or nothing at all (0% duty cycle). When under bang-bang control, the Peltier starts off in full blast mode so that it can reach its setpoint, the desired temperature, as fast as it can. Upon reaching the setpoint, the Peltier fails to cease cooling in time, and so the Peltier undershoots the desired temperature. This undershooting triggers the Peltier to enter its total off state, so that the temperature can rise back up towards the setpoint, as quickly (and as passively) as possible. Under this regime, the Peltier overshoots its setpoint, which causes the device to enter its 100% duty cycle state again. This infinite oscillation between the two discrete 100% and 0% duty cycle states actually hovers around the setpoint, reasonably tightly, and with acceptable latency. See this figure I generated from a single trial of temperature measurements while my Peltier was under bang-bang control:
 
 ![Bang-bang control of Peltier with 17 C setpoint](plots/temps_vs_time_for_bangbang.png)
 
@@ -60,12 +60,52 @@ The main disadvantage of the bang-bang control for our application, however, is 
 
 The [PID control system](https://en.wikipedia.org/wiki/PID_controller) is one of the most famous and popular control schemes ever devised (and there are [many](https://www.arrow.com/en/research-and-events/articles/pid-controller-basics-and-tutorial-pid-implementation-in-arduino) [tutorials](https://www.teachmemicro.com/arduino-pid-control-tutorial/) for implementing it on a microcontroller), but it is often finicky to tune and can sometimes be overkill, depending on the application. For example, in systems with slow dynamics, like in most temperature systems, the integral term of a PI or PID control system can easily promote instability. For this reason, [Will](https://github.com/willdickson) advised that I limit myself to a P control system instead, but to include a feedforward (FF) term, so that upon initialization, I can ballpark the correct PWM value needed to reach the setpoint temperature. The P control would then push the ballpark estimate to a steady state that approximates the setpoint. Expressed more precisely, 
 
-\begin{math}
-    \text{FF}(T_{\text{set}}) + \text{gain}(T_{\text{set}} - T_{\text{measured}}) 
-\end{math}
+![P-FF control equation](docs/P_FF_control_eqn.png)
 
+To implement the above control scheme, we first need to approximate the FF function. To do so, we try and build a relationship between PWM values and their resulting steady-state Peltier temperatures. We do so by uploading an open loop scheme to our microprocessor. The one I wrote and used is [here](https://github.com/hanhanhan-kim/cold_stage/tree/master/firmware/pwm_dc_ds18b20_open_loop). I collect with it the following timeseries data (while I don't show it below, because they depict just room temperature, I also collected temperature data for PWM 0 and PWM 1; they can be found [here](https://github.com/hanhanhan-kim/cold_stage/tree/master/plots/temps_vs_time_for_PWM):
 
+![pwm3](plots/temps_vs_time_for_PWM/temps_vs_time_for_PWM_003.png)
+![pwm7](plots/temps_vs_time_for_PWM/temps_vs_time_for_PWM_007.png)
+![pwm15](plots/temps_vs_time_for_PWM/temps_vs_time_for_PWM_015.png)
+![pwm31](plots/temps_vs_time_for_PWM/temps_vs_time_for_PWM_031.png)
+![pwm63](plots/temps_vs_time_for_PWM/temps_vs_time_for_PWM_063.png)
+![pwm127](plots/temps_vs_time_for_PWM/temps_vs_time_for_PWM_127.png)
+![pwm255](plots/temps_vs_time_for_PWM/temps_vs_time_for_PWM_255.png)
 
+The FF function does not need to very good, because the P term of our control scheme will correct for deviations from the setpoint. For this reason, we can just eyeball the measured steady-state temperature for each PWM setting, and plot those temperatures against their PWM values. We then perform a quick and dirty linear regression to derive the approximate FF function:
+
+![lookup table of PWMS vs temps](plots/PWMs_vs_temps.png)
+
+We implement this FF function in our final [firmware](https://github.com/hanhanhan-kim/cold_stage/blob/master/firmware/pwm_dc_ds18b20_FF_P_loop/pwm_dc_ds18b20_FF_P_loop.ino) ...
+
+```cpp
+float feedforward(float setpointC){
+  float pwmValue;
+  pwmValue = -10.44 * setpointC + 243.16;
+  return pwmValue;
+}
+```
+
+... and use it with the P control ...
+
+```cpp
+if (pwmValue <= 255 && pwmValue >=0){
+    float ff = feedforward(setpointC);
+    float error = setpointC - sensors.getTempCByIndex(0);
+    
+    float pwmValue = ff - gainP * error;
+    // Set PWM pin to our new PWM value:
+    analogWrite(pwmPin, pwmValue);
+  }
+```
+
+Before we can call it a day, we need to tune the magnitude of our gain term. P control is [readily susceptible to](https://softwareengineering.stackexchange.com/questions/214912/why-does-a-proportional-controller-have-a-steady-state-error) [steady-state error](https://en.wikipedia.org/wiki/Proportional_control#Offset_error). One way to reduce this error is by adding an integral (I) term, so we can consider the cummulative error history. But as mentioned above, doing so is finicky for our application. An alternative simpler solution is to simply crank up the gain's magnitude. Doing so will push our steady-state temperature closer to the setpoint, but if we set the magnitude of our gain too high, our system will become unstable. Below, I plot the measured temperatures for three different gain values in our system:
+
+![gain2](plots/temps_vs_time_for_gains_of_P_feedfwd/temps_vs_time_for_gain_02.png)
+![gain10](plots/temps_vs_time_for_gains_of_P_feedfwd/temps_vs_time_for_gain_10.png)
+![gain50](plots/temps_vs_time_for_gains_of_P_feedfwd/temps_vs_time_for_gain_50.png)
+
+The above data suggests that a gain magnitude of 50 is close to appropriate! The steady state temperature is only half a degree or so off from the setpoint. 
 
 TODO: Add button (support only a single setpoint, probs 4C) or pot (support many setpoints)
 TODO: Add 7-segment display
@@ -77,6 +117,9 @@ TODO: Design PCB?
 
 
 <!-- One of the many reasons the Teensy is great is because it has tons of digital and PWM pins—way more than the Arduino Nano, which despite having a similar form factor, provides less generous pin options.  -->
+
+<!-- I have a delay(1000) term, which is fine, given how slow my system is. But if I want to change the timestep, I can preserve the dynamics by scaling the timestep with the gain. the relationship is:
+gain1 / dt1 = gain2 / dt2 -->
 
 
 
