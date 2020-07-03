@@ -36,7 +36,7 @@ Our circuit wiring might look something like this:
 
 ![VNH5019 hookup example from Pololu](docs/full_circuit_hookup.jpg)
 
-Don't fret if your wiring doesn't look exactly like the photo above. So long as the digital wires go to the digital pins, GND goes to GND, VCC goes to VCC, and PWM goes to PWM, you should be set. Don't forget to plug in the Peltier module's fan! The fan is also 12 V, so it plug into the same 12 V power supply that's powering the Peltier device. 
+Don't fret if your wiring doesn't look exactly like the photo above. So long as the digital wires go to the digital pins, GND goes to GND, VCC goes to VCC, and PWM goes to PWM, you should be set. Don't forget to plug in the Peltier module's fan! The fan is also 12 V, so it can plug into the same 12 V power supply that's powering the Peltier device. 
 
 ## Firmware
 
@@ -118,7 +118,7 @@ TODO: Try liquid-cooled Peltier\
 TODO: If using liquid-cooled Peltier, think of a cheap way to flow the liquid. Probably pond or aquarium pump.\
 TODO: Design and mill aluminum plate that has a socket for securing the temperature sensor; screw onto Peltier and use CPU cooling paste\
 TODO: Design casing\
-TODO: Design PCB?\
+TODO: Design PCB?
 
 
 <!-- One of the many reasons the Teensy is great is because it has tons of digital and PWM pins—way more than the Arduino Nano, which despite having a similar form factor, provides less generous pin options.  -->
