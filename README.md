@@ -1,6 +1,6 @@
 # How to make an insect cooling stage
 
-**_N.B._ This project is currently a work-in-progress!**
+**_N.B._ This project is a work-in-progress!**
 
 I outline the steps for making a DIY insect cooling stage. Cold temperatures immobilize insects so they can be used for common downstream preparations in neurobiology experiments. Cooling stages provide a useful alternative to carbon dioxide-based methods, which result in physiological and behavioural side-effects on the insect. In addition, a cheap and easy to assemble cooling stage may prove useful for those who wish to do some preliminary experimentation from home, during the ongoing COVID-19 crisis. 
 
@@ -23,7 +23,7 @@ In addition to the usual hobby electronics tools and consumables—jumper wires,
 Connect the DC motor driver to the Teensy as specified in the below schematic from Pololu:
 
 ```
-![alt text](https://github.com/hanhanhan-kim/cold_stage/blob/master/docs/VNH5019_hookup.jpg?raw=true)
+![VNH5019 hookup example from Pololu](docs/VNH5019_hookup.jpg)
 ```
 
 One of the many reasons the Teensy is great is because it has tons of digital and PWM pins—way more than the Arduino Nano, which despite having a similar form factor, is limited in its pin selections. 
