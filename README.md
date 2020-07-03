@@ -107,7 +107,7 @@ Before we can call it a day, we need to tune the magnitude of our gain term. P c
 ![gain10](plots/temps_vs_time_for_gains_of_P_feedfwd/temps_vs_time_for_gain_10.png)
 ![gain50](plots/temps_vs_time_for_gains_of_P_feedfwd/temps_vs_time_for_gain_50.png)
 
-The above data suggests that a gain magnitude of 50 is close to appropriate! The steady state temperature is only half a degree or so off from the setpoint. We employ a gain of magnitude 50 in our final temperature control system. 
+The above data suggests that a gain of magnitude 50 is close to appropriate. The steady state temperature is only half a degree or so off from the setpoint. We employ a gain of magnitude 50 in our final temperature control system. 
  
  \
  \
