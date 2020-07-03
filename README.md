@@ -1,6 +1,6 @@
 # How to make an insect cooling stage
 
-**_N.B._ This project is a work-in-progress!**
+**_N.B._ This project is a work-in-progress! It's minimally functional for now, but still very much in the works.**
 
 I outline the steps for making a DIY insect cooling stage. Cold temperatures immobilize insects so they can be used for common downstream preparations in neurobiology experiments. Cooling stages provide a useful alternative to carbon dioxide-based methods, which result in physiological and behavioural side-effects on the insect. In addition, a cheap and easy to assemble cooling stage may prove useful for those who wish to do some preliminary experimentation from home, during the ongoing COVID-19 crisis. 
 
