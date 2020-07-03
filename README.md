@@ -18,11 +18,23 @@ In addition to the usual hobby electronics tools and consumables—jumper wires,
 
 ## Circuit
 
-Connect the DC motor driver to the Teensy as specified in the below schematic from Pololu:
+Connect the DC motor driver to the Teensy as specified in the below schematic from Pololu. Note that the GNDs for the motor and logic powers are common:
 
 ![VNH5019 hookup example from Pololu](docs/VNH5019_hookup.jpg)
 
-One of the many reasons the Teensy is great is because it has tons of digital and PWM pins—way more than the Arduino Nano, which despite having a similar form factor, is limited in its pin selections. 
+Then connect the DS18B20 temperature sensor. Place the 4.7 kOhm resistor in parallel with the sensor's signal and VCC lines. Connect the sensor's signal wire to any digital pin on the Teensy, its GND to the common GND, and its VCC to the common logic VCC. See [this blog post](https://create.arduino.cc/projecthub/TheGadgetBoy/ds18b20-digital-temperature-sensor-and-arduino-9cc806) for more details. 
+
+Our circuit wiring might look something like this:
+
+![VNH5019 hookup example from Pololu](docs/full_circuit_hookup.jpg)
+
+Don't fret if your wiring doesn't look exactly like the photo above. So long as the digital wires go to the digital pins, GND goes to GND, VCC goes to VCC, and PWM goes to PWM, you should be set. 
+
+## Firmware
+
+If you want to get your cooling stage going right away, simply upload this sketch to your Teensy and call it a day! Simply edit the line specifying the setpoint temperature (C), `const float setpointC = 17;`, to whatever you fancy—probably something like `4`. If you're interested in a little bit of the troubleshooting and validation I went through to arrive at the recommended firmware, continuing reading this section. 
+
+<!-- One of the many reasons the Teensy is great is because it has tons of digital and PWM pins—way more than the Arduino Nano, which despite having a similar form factor, provides less generous pin options.  -->
 
 
 
