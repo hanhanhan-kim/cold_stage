@@ -60,9 +60,9 @@ The main disadvantage of the bang-bang control for our application, however, is 
 
 The [PID control system](https://en.wikipedia.org/wiki/PID_controller) is one of the most famous and popular control schemes ever devised (and there are [many](https://www.arrow.com/en/research-and-events/articles/pid-controller-basics-and-tutorial-pid-implementation-in-arduino) [tutorials](https://www.teachmemicro.com/arduino-pid-control-tutorial/) for implementing it on a microcontroller), but it is often finicky to tune and can sometimes be overkill, depending on the application. For example, in systems with slow dynamics, like in most temperature systems, the integral term of a PI or PID control system can easily promote instability. For this reason, [Will](https://github.com/willdickson) advised that I limit myself to a P control system instead, but to include a feedforward (FF) term, so that upon initialization, I can ballpark the correct PWM value needed to reach the setpoint temperature. The P control would then push the ballpark estimate to a steady state that approximates the setpoint. Expressed more precisely, 
 
-\begin{equation}
+\begin{math}
     \text{FF}(T_{\text{set}}) + \text{gain}(T_{\text{set}} - T_{\text{measured}}) 
-\end{equation}
+\end{math}
 
 
 
