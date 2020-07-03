@@ -21,7 +21,7 @@ In addition to the usual hobby electronics tools and consumables—jumper wires,
 Connect the DC motor driver to the Teensy as specified in the below schematic from Pololu:
 
 ```
-![VNH5019 wiring schematic from Pololu](./docs/VNH5019.jpg)
+![VNH5019 wiring schematic from Pololu](./docs/VNH5019_hookup.jpg)
 Format: ![Alt Text](url)
 ```
 
