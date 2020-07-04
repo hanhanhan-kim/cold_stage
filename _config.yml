@@ -1,3 +1,7 @@
+# Theme settings:
+title: cold stage
+
+# Build settings:
 theme: jekyll-theme-minimal
 markdown: kramdown
 plugins:
