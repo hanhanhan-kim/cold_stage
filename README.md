@@ -40,7 +40,7 @@ Don't fret if your wiring doesn't look exactly like the photo above. So long as 
 
 ## Firmware
 
-If you want to get your cooling stage going right away, upload [this sketch](https://github.com/hanhanhan-kim/cold_stage/blob/master/firmware/pwm_dc_ds18b20_FF_P_loop/pwm_dc_ds18b20_FF_P_loop.ino) to your Teensy and call it a day! Just edit the line specifying the setpoint temperature (C), `const float setpointC = 17;`, to whatever you fancy—probably something like `4` C. If you're interested in a little bit of the troubleshooting and validation process I went through to arrive at the recommended firmware, continue to the next section. Otherwise, enjoy your icy immobile insects!
+If you want to get your cooling stage going right away, upload [this sketch](https://github.com/hanhanhan-kim/cold_stage/blob/master/firmware/pwm_dc_ds18b20_FF_P_loop/pwm_dc_ds18b20_FF_P_loop.ino) to your Teensy and call it a day! Just edit the line specifying the setpoint temperature (C), `const float setpointC = 17;`, to whatever you fancy—probably something like `4` C. If you're interested in a little bit of the troubleshooting and validation process I went through to arrive at the recommended firmware, continue to the next section. Otherwise, enjoy your icy immobile insects! The following image depicts a set-up good enough for COVID-19-era home use:
 
 ![A frosty Peltier](docs/frosty_peltier.jpg)
 
