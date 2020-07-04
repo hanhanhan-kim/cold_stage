@@ -109,28 +109,19 @@ Before we can call it a day, we need to tune the magnitude of our gain term. P c
 
 The above data suggests that a gain of magnitude 50 is close to appropriate. The steady state temperature is only half a degree or so off from the setpoint. We employ a gain of magnitude 50 in our final temperature control system. 
  
- \
- \
- \
-TODO: Add button (support only a single setpoint, probs 4C) or pot (support many setpoints)\
-TODO: Add 7-segment display\
-TODO: Try liquid-cooled Peltier\
-TODO: If using liquid-cooled Peltier, think of a cheap way to flow the liquid. Probably pond or aquarium pump.\
-TODO: Design and mill aluminum plate that has a socket for securing the temperature sensor; screw onto Peltier and use CPU cooling paste\
-TODO: Design casing\
-TODO: Design PCB?
+ 
+## To-dos: 
+- Add a hardware switch.
+- Add a 7-segment display. 
+- Try a liquid-cooled Peltier—will raise the price considerably, but may be more appropriate for an everday lab use version.
+- If trying a liquid-cooled Peltier, think of a cheap way to flow the liquid—probably a pond or aquarium pump. 
+- Design and mill an aluminum plate to interface between the insect and Peltier. Use CPU cooling paste. Feature a socket for securing the temperature sensor. Screw the plate onto the Peltier module.
+- Design a case to protect the electronics. I might want to use a more heat-resistant material.
+- Maybe add some kind of pot to support multiple setpoints
+- Maybe design a PCB—might be more work than it's worthwhile though. I would advise soldering components onto a piece of perfboard for now. 
 
 
 <!-- One of the many reasons the Teensy is great is because it has tons of digital and PWM pins—way more than the Arduino Nano, which despite having a similar form factor, provides less generous pin options.  -->
 
 <!-- I have a delay(1000) term, which is fine, given how slow my system is. But if I want to change the timestep, I can preserve the dynamics by scaling the timestep with the gain. the relationship is:
 gain1 / dt1 = gain2 / dt2 -->
-
-
-
-
-
- 
-
-
-
