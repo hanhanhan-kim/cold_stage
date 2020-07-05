@@ -2,7 +2,7 @@
 title: cold stage
 
 # Build settings:
-theme: jekyll-theme-minimal
+remote_theme: hanhanhan-kim/minimal
 markdown: kramdown
 plugins:
   - jemoji
