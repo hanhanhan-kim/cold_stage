@@ -1,7 +1,3 @@
----
-layout: default
----
-
 # How to make an insect cooling stage
 
 **_N.B._ This project is a work-in-progress! It's minimally functional for now, but still very much in the works. For example, elastic bands currently secure the temperature sensor :sweat_smile:**
