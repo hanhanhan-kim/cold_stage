@@ -2,7 +2,7 @@
 title: cold stage
 
 # Build settings:
-theme: jekyll-theme-minimal
+remote_theme: poole/poole
 markdown: kramdown
 plugins:
   - jemoji
