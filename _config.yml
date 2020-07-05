@@ -1,9 +1,0 @@
-# Site settings:
-title: han kim
-description: neuro grad student
-
-# Build settings:
-remote_theme: hanhanhan-kim/minimal
-markdown: kramdown
-plugins:
-  - jemoji
