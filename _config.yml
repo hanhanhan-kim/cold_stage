@@ -6,3 +6,4 @@ theme: jekyll-theme-minimal
 markdown: kramdown
 plugins:
   - jemoji
+layouts_dir: ../_layouts
