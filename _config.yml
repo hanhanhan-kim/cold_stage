@@ -1,6 +1,3 @@
-# Theme settings:
-title: cold stage
-
 # Build settings:
 remote_theme: hanhanhan-kim/minimal
 markdown: kramdown
